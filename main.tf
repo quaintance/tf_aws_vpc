@@ -146,13 +146,13 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_vpc_dhcp_options_association" "dns_resolver" {
-  count           = "${var.enable_dhcp_options == "true" 1 : 0}"
+  count           = "${var.enable_dhcp_options == "true" ? 1 : 0}"
   vpc_id          = "${aws_vpc.mod.id}"
   dhcp_options_id = "${aws_vpc_dhcp_options.mod.id}"
 }
 
 resource "aws_vpc_dhcp_option" "dns_resolver" {
-  count               = "${var.enable_dhcp_options == "true" 1 : 0}"
+  count               = "${var.enable_dhcp_options == "true"  ? 1 : 0}"
   domain_name         = "${var.dhcp_domain_name}"
   domain_name_servers = "${var.dhcp_dns_servers}"
 }
