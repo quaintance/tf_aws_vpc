@@ -59,6 +59,7 @@ variable "enable_s3_endpoint" {
   description = "should be true if you want to provision an S3 endpoint to the VPC"
   default     = false
 }
+
 variable "map_public_ip_on_launch" {
   description = "should be false if you do not want to auto-assign public IP on launch"
   default     = true
@@ -97,4 +98,21 @@ variable "database_subnet_tags" {
 variable "elasticache_subnet_tags" {
   description = "Additional tags for the elasticache subnets"
   default     = {}
+}
+
+variable "override_dhcp_options" {
+  type        = "string"
+  description = "if true, will add vpc_dhcp_domain resources"
+  default     = "false"
+}
+
+variable "vpc_dhcp_domain_name" {
+  description = "VPC DHCP options domain name"
+  default     = ""
+}
+
+variable "vpc_dhcp_dns_servers" {
+  type        = "list"
+  description = "VPC DHCP DNS server list"
+  default     = []
 }

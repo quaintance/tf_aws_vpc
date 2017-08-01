@@ -112,7 +112,7 @@ resource "aws_vpc_endpoint" "ep" {
 resource "aws_vpc_endpoint_route_table_association" "private_s3" {
   count           = "${var.enable_s3_endpoint ? length(var.private_subnets) : 0}"
   vpc_endpoint_id = "${aws_vpc_endpoint.ep.id}"
-  route_table_id = "${element(aws_route_table.private.*.id, count.index)}"
+  route_table_id  = "${element(aws_route_table.private.*.id, count.index)}"
 }
 
 resource "aws_vpc_endpoint_route_table_association" "public_s3" {
@@ -143,4 +143,16 @@ resource "aws_route_table_association" "public" {
   count          = "${length(var.public_subnets)}"
   subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
   route_table_id = "${aws_route_table.public.id}"
+}
+
+resource "aws_vpc_dhcp_options_association" "dns_resolver" {
+  count           = "${var.override_dhcp_options == "true" 1 : 0}"
+  vpc_id          = "${aws_vpc.mod.id}"
+  dhcp_options_id = "${aws_vpc_dhcp_options.mod.id}"
+}
+
+resource "aws_vpc_dhcp_option" "dns_resolver" {
+  count               = "${var.override_dhcp_options == "true" 1 : 0}"
+  domain_name         = "${var.vpc_dhcp_domain_name}"
+  domain_name_servers = "${var.vpc_dhcp_dns_servers}"
 }
