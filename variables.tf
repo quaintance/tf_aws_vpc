@@ -100,18 +100,18 @@ variable "elasticache_subnet_tags" {
   default     = {}
 }
 
-variable "override_dhcp_options" {
+variable "enable_dhcp_options" {
   type        = "string"
   description = "if true, will add vpc_dhcp_domain resources"
   default     = "false"
 }
 
-variable "vpc_dhcp_domain_name" {
+variable "dhcp_domain_name" {
   description = "VPC DHCP options domain name"
   default     = ""
 }
 
-variable "vpc_dhcp_dns_servers" {
+variable "dhcp_dns_servers" {
   type        = "list"
   description = "VPC DHCP DNS server list"
   default     = []
